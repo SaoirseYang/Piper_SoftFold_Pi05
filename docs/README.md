@@ -130,6 +130,8 @@ bash scripts/run_async_policy_client_pi05_remote.sh configs/softfold_piper_pi05.
 ```
 
 配置入口：对应 JSON 的 `remote_gpu` / `policy_server` / `async_inference`。
+
+参数表（含 RTC）：[`docs/SOFTFOLD_PIPER_PI05_CONFIG.md`](SOFTFOLD_PIPER_PI05_CONFIG.md)（对应 `configs/softfold_piper_pi05_rtc.json`）。
 ---
 
 ## Soft-Fold 虚拟数据（跨具身）
