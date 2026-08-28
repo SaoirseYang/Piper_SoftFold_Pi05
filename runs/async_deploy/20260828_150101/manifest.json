@@ -1,0 +1,61 @@
+{
+  "run_id": "20260828_150101",
+  "base_config": "/home/agilex/code/yjw/SoftFold/configs/softfold_piper_pi05_rtc.json",
+  "deploy_yaml": "/home/agilex/code/yjw/SoftFold/configs/deploy_async_pi05_rtc_ab.yaml",
+  "out_dir": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_150101",
+  "base_port": 8080,
+  "cuda_visible_devices": "0,1",
+  "instances": [
+    {
+      "id": 0,
+      "name": "last_weighted_average",
+      "config_rel": "cfgs/last_weighted_average.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_150101/cfgs/last_weighted_average.json",
+      "base_config": "configs/softfold_piper_pi05_rgrasp_mapping.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/last/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.4,
+      "smoothing_alpha": 0.2,
+      "rtc_enabled": false,
+      "aggregate_fn_name": "weighted_average",
+      "port": 8080,
+      "server_address": "127.0.0.1:8080",
+      "tmux_session": "sf-srv-20260828_150101-00",
+      "tunnel_pid_file": "pids/tunnel_00.pid"
+    },
+    {
+      "id": 1,
+      "name": "last_nothing",
+      "config_rel": "cfgs/last_nothing.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_150101/cfgs/last_nothing.json",
+      "base_config": "configs/softfold_piper_pi05_rtc.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/last/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.4,
+      "smoothing_alpha": 0.2,
+      "rtc_enabled": false,
+      "aggregate_fn_name": "latest_only",
+      "port": 8081,
+      "server_address": "127.0.0.1:8081",
+      "tmux_session": "sf-srv-20260828_150101-01",
+      "tunnel_pid_file": "pids/tunnel_01.pid"
+    },
+    {
+      "id": 2,
+      "name": "last_rtc",
+      "config_rel": "cfgs/last_rtc.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_150101/cfgs/last_rtc.json",
+      "base_config": "configs/softfold_piper_pi05_rtc.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/last/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.4,
+      "smoothing_alpha": 0.2,
+      "rtc_enabled": true,
+      "aggregate_fn_name": "latest_only",
+      "port": 8082,
+      "server_address": "127.0.0.1:8082",
+      "tmux_session": "sf-srv-20260828_150101-02",
+      "tunnel_pid_file": "pids/tunnel_02.pid"
+    }
+  ]
+}

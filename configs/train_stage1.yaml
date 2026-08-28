@@ -1,0 +1,43 @@
+# Stage-1: Soft Prompt + action head warmup (backbone frozen)
+
+dataset:
+  # Point this at local real data OR a packaged mixed root.
+  # Virtual-only warmup is also valid for a first smoke.
+  repo_id: piper-softfold-virtual-v1
+  root: data/lerobot/piper-softfold-virtual-v1
+
+mix_manifest: data/mix_manifest.json
+
+training:
+  policy_path: lerobot/xvla-soft-fold
+  job_name: xvla_piper_stage1_prompt
+  output_dir: outputs/train/xvla_piper_stage1_prompt
+  device: cuda
+  dtype: bfloat16
+  steps: 5000
+  batch_size: 1
+  log_freq: 50
+  save_freq: 1000
+  wandb_enable: false
+  action_mode: auto
+  max_action_dim: 20
+  chunk_size: 16
+  n_action_steps: 16
+  num_denoising_steps: 10
+  use_proprio: true
+  freeze_vision_encoder: true
+  freeze_language_encoder: true
+  train_policy_transformer: false
+  train_soft_prompts: true
+  lr: 1.0e-4
+  normalization_mapping:
+    ACTION: IDENTITY
+    STATE: IDENTITY
+    VISUAL: IDENTITY
+  rename_map:
+    observation.images.cam_high: observation.images.image
+    observation.images.cam_left_wrist: observation.images.image2
+    observation.images.cam_right_wrist: observation.images.image3
+    observation.images.cam_top: observation.images.image2
+    observation.images.cam_left: observation.images.image3
+    observation.images.cam_right: observation.images.image

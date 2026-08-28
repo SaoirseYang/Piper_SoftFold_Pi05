@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+outputs/
+logs/
+third_party/
+*.pt
+*.safetensors
+*.ckpt
+.DS_Store
+.README.md.swp

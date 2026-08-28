@@ -1,0 +1,43 @@
+# Stage-2: shallow vision unfreeze at low LR, continue from stage-1 ckpt
+
+dataset:
+  repo_id: piper-softfold-local-v1
+  root: data/lerobot/piper-softfold-local-v1
+
+mix_manifest: data/mix_manifest.json
+early_stop_source_drop: 0.05
+
+training:
+  # Point to stage-1 checkpoint
+  policy_path: outputs/train/xvla_piper_stage1_prompt/checkpoints/last/pretrained_model
+  job_name: xvla_piper_stage2_shallow
+  output_dir: outputs/train/xvla_piper_stage2_shallow
+  device: cuda
+  dtype: bfloat16
+  steps: 3000
+  batch_size: 1
+  log_freq: 50
+  save_freq: 1000
+  wandb_enable: false
+  action_mode: auto
+  max_action_dim: 20
+  chunk_size: 16
+  n_action_steps: 16
+  num_denoising_steps: 10
+  use_proprio: true
+  freeze_vision_encoder: false
+  freeze_language_encoder: true
+  train_policy_transformer: false
+  train_soft_prompts: true
+  lr: 3.0e-5
+  normalization_mapping:
+    ACTION: IDENTITY
+    STATE: IDENTITY
+    VISUAL: IDENTITY
+  rename_map:
+    observation.images.cam_high: observation.images.image
+    observation.images.cam_left_wrist: observation.images.image2
+    observation.images.cam_right_wrist: observation.images.image3
+    observation.images.cam_top: observation.images.image2
+    observation.images.cam_left: observation.images.image3
+    observation.images.cam_right: observation.images.image

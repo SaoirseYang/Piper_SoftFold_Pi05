@@ -1,0 +1,145 @@
+{
+  "task": "fold the cloth",
+  "dataset_format": "lerobot",
+  "repo_id": "local/softfold_piper_v2",
+  "root": "data/lerobot",
+  "robot_type": "piper",
+  "no_videos": false,
+  "prompt_outcome": true,
+  "episode_outcome": "skip",
+  "output_dir": "data/raw",
+  "fps": 20.0,
+  "duration": null,
+  "follower_left_can": "can2",
+  "follower_right_can": "can0",
+  "leader_left_can": "can2",
+  "leader_right_can": "can0",
+  "camera_width": 640,
+  "camera_height": 480,
+  "camera_fps": 30,
+  "image_format": "jpg",
+  "image_quality": 95,
+  "action_source": "leader",
+  "recording_notes": "SoftFold 本地关节数据训 pi05。照 success.json 结构；相机为 soft-fold 同构命名。训练时 start_training 默认会生成 *_ojag。",
+  "training": {
+    "policy_type": "pi05",
+    "job_name": "pi05_softfold_piper_v2_50_ojag",
+    "output_dir": "outputs/train/pi05_softfold_piper_v2_50_ojag",
+    "pretrained_path": "lerobot/pi05_base",
+    "dtype": "bfloat16",
+    "compile_model": true,
+    "gradient_checkpointing": true,
+    "freeze_vision_encoder": false,
+    "train_expert_only": false,
+    "normalization_mapping": {
+      "ACTION": "MEAN_STD",
+      "STATE": "MEAN_STD",
+      "VISUAL": "IDENTITY"
+    },
+    "device": "cuda",
+    "steps": 10000,
+    "batch_size": 4,
+    "log_freq": 50,
+    "save_freq": 5000,
+    "wandb_enable": false,
+    "video_backend": "pyav",
+    "outcome_filter": "exclude-failures",
+    "include_unknown": false,
+    "exclude_unlabeled": true,
+    "push_to_hub": false
+  },
+  "policy_live": {
+    "policy_path": "outputs/train/pi05_softfold_piper_v2_50_ojag/checkpoints/last/pretrained_model",
+    "repo_id": "local/softfold_piper_v2",
+    "dataset_root": "data/lerobot/local/softfold_piper_v2",
+    "video_backend": "pyav",
+    "device": "cuda",
+    "inference_dtype": "bfloat16",
+    "compile_model": false,
+    "num_inference_steps": 10,
+    "execute": true,
+    "duration": 180.0,
+    "fps": 20.0,
+    "control_speed": 40,
+    "max_joint_step_rad": 0.025,
+    "max_gripper_step_m": 0,
+    "gripper_effort": 1000,
+    "smoothing_alpha": 0.20,
+    "pace_by_reach": false,
+    "advance_threshold_rad": 0.08,
+    "max_hold_steps": 30,
+    "print_every": 1,
+    "log_jsonl": ""
+  },
+  "cameras": [
+    {
+      "name": "cam_high",
+      "ref": 14
+    },
+    {
+      "name": "cam_left_wrist",
+      "ref": 20
+    },
+    {
+      "name": "cam_right_wrist",
+      "ref": 16
+    }
+  ],
+  "preprocessing": {
+    "enabled": false
+  },
+  "deployment": {
+    "notes": "GPU 服务器(A600)跑 Policy Server；工控机跑 SSH 隧道 + Robot Client。仓库在 /data/yangjingwen/code/SoftFold。",
+    "gpu_server": {
+      "ssh_host": "A600",
+      "repo_root": "/data/yangjingwen/code/SoftFold",
+      "run_script": "scripts/start_policy_server_pi05.sh"
+    },
+    "robot_ipc": {
+      "repo_root": "/home/agilex/code/yjw/SoftFold",
+      "tunnel_script": "scripts/ssh_tunnel_policy_server.sh",
+      "client_script": "scripts/run_async_policy_client_pi05.sh"
+    }
+  },
+  "policy_server": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "fps": 20,
+    "inference_latency": 0.2,
+    "obs_queue_timeout": 15,
+    "inference_dtype": "bfloat16",
+    "compile_model": false,
+    "num_inference_steps": 10,
+    "preload_at_startup": true
+  },
+  "remote_gpu": {
+    "ssh_host": "A600",
+    "gpu_repo_root": "/data/yangjingwen/code/SoftFold",
+    "conda_env": "piper",
+    "use_ssh_tunnel": true,
+    "tunnel_local_port": 8080,
+    "tunnel_remote_host": "127.0.0.1",
+    "tunnel_remote_port": 8080
+  },
+  "async_inference": {
+    "server_address": "127.0.0.1:8080",
+    "policy_type": "pi05",
+    "policy_device": "cuda",
+    "actions_per_chunk": 50,
+    "chunk_size_threshold": 0.6,
+    "aggregate_fn_name": "weighted_average",
+    "execute": true,
+    "duration": 180.0,
+    "network_benchmark_samples": 5,
+    "log_latency": true,
+    "latency_log_jsonl": "",
+    "fps": 20.0,
+    "control_speed": 40,
+    "max_joint_step_rad": 0.025,
+    "max_gripper_step_m": 0.000,
+    "smoothing_alpha": 0.20,
+    "obs_image_compression": "jpeg",
+    "obs_jpeg_quality": 85,
+    "debug_visualize_queue_size": false
+  }
+}

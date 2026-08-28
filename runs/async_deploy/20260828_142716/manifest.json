@@ -1,0 +1,66 @@
+{
+  "run_id": "20260828_142716",
+  "base_config": "/home/agilex/code/yjw/SoftFold/configs/softfold_piper_pi05_rtc.json",
+  "deploy_yaml": "/home/agilex/code/yjw/SoftFold/configs/deploy_async_pi05.yaml",
+  "out_dir": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_142716",
+  "base_port": 8080,
+  "cuda_visible_devices": "0,1",
+  "instances": [
+    {
+      "id": 0,
+      "name": "i00_ckpt-checkpoints_s10_c0.2_a0.2",
+      "config_rel": "cfgs/i00_ckpt-checkpoints_s10_c0.2_a0.2.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_142716/cfgs/i00_ckpt-checkpoints_s10_c0.2_a0.2.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/last/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.2,
+      "smoothing_alpha": 0.2,
+      "port": 8080,
+      "server_address": "127.0.0.1:8080",
+      "tmux_session": "sf-srv-20260828_142716-00",
+      "tunnel_pid_file": "pids/tunnel_00.pid"
+    },
+    {
+      "id": 1,
+      "name": "i01_ckpt-checkpoints_s10_c0.4_a0.2",
+      "config_rel": "cfgs/i01_ckpt-checkpoints_s10_c0.4_a0.2.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_142716/cfgs/i01_ckpt-checkpoints_s10_c0.4_a0.2.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/last/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.4,
+      "smoothing_alpha": 0.2,
+      "port": 8081,
+      "server_address": "127.0.0.1:8081",
+      "tmux_session": "sf-srv-20260828_142716-01",
+      "tunnel_pid_file": "pids/tunnel_01.pid"
+    },
+    {
+      "id": 2,
+      "name": "i02_ckpt-checkpoints_s10_c0.2_a0.2",
+      "config_rel": "cfgs/i02_ckpt-checkpoints_s10_c0.2_a0.2.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_142716/cfgs/i02_ckpt-checkpoints_s10_c0.2_a0.2.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/015000/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.2,
+      "smoothing_alpha": 0.2,
+      "port": 8082,
+      "server_address": "127.0.0.1:8082",
+      "tmux_session": "sf-srv-20260828_142716-02",
+      "tunnel_pid_file": "pids/tunnel_02.pid"
+    },
+    {
+      "id": 3,
+      "name": "i03_ckpt-checkpoints_s10_c0.4_a0.2",
+      "config_rel": "cfgs/i03_ckpt-checkpoints_s10_c0.4_a0.2.json",
+      "config_path": "/home/agilex/code/yjw/SoftFold/runs/async_deploy/20260828_142716/cfgs/i03_ckpt-checkpoints_s10_c0.4_a0.2.json",
+      "policy_path": "outputs/train/pi05_softfold_piper_v2_rgrasp_ojag_mapping/checkpoints/015000/pretrained_model",
+      "num_inference_steps": 10,
+      "chunk_size_threshold": 0.4,
+      "smoothing_alpha": 0.2,
+      "port": 8083,
+      "server_address": "127.0.0.1:8083",
+      "tmux_session": "sf-srv-20260828_142716-03",
+      "tunnel_pid_file": "pids/tunnel_03.pid"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+# SoftFold 异步推理多实例部署清单（工控机侧使用）
+#
+# 用法：
+#   bash scripts/deploy_async_inference.sh up --yaml configs/deploy_async_pi05_rgrasp.yaml
+#   bash scripts/pi05_pipeline.sh deploy --yaml configs/deploy_async_pi05_rgrasp.yaml
+#
+# 两种选参方式二选一（同时写时优先用 instances）：
+#   1) checkpoints + grid  → 笛卡尔积
+#   2) instances           → 逐条指定（推荐精细对比时用）
+
+base_config: configs/softfold_piper_pi05_rtc.json
+
+# 端口从 base_port 起递增分配（本地 tunnel = 远端 server）
+base_port: 8080
+
+# 笛卡尔积 / 显式列表的硬上限（也可环境变量 MAX_INSTANCES）
+max_instances: 4
+
+# 传给远端 Policy Server 的 CUDA_VISIBLE_DEVICES（可选）
+cuda_visible_devices: "0,1"
+
+# ---------------------------------------------------------------------------
+# 方式 A：checkpoints × grid（笛卡尔积）
+# ---------------------------------------------------------------------------
+checkpoints:
+  # 步数请加引号！否则 YAML 1.1 会把 050000 当成八进制 → 20480
+  - last
+  - "015000"
+  # - outputs/train/pi05_softfold_piper_v2_rgrasp_ojag/checkpoints/last/pretrained_model
+
+grid:
+  num_inference_steps: [10]
+  chunk_size_threshold: [0.20, 0.40]
+  smoothing_alpha: [0.20]
+
+# ---------------------------------------------------------------------------
+# 方式 B：显式实例（取消注释即覆盖上面的 grid）
+# ---------------------------------------------------------------------------
+# instances:
+#   - name: last_s5_c050_a020
+#     checkpoint: last
+#     num_inference_steps: 5
+#     chunk_size_threshold: 0.50
+#     smoothing_alpha: 0.20
+#   - checkpoint: "050000"
+#     num_inference_steps: 10
+#     chunk_size_threshold: 0.50
+#     smoothing_alpha: 0.30

@@ -1,0 +1,15 @@
+{
+  "notes": "local_to_sf from piper data/eef_align_compare/smoke_ep0 (neg_y_as_x + auto xy/z). Converter inverts this to Soft-Fold → Piper before IK.",
+  "z_mode_local": "table",
+  "local_to_sf": {
+    "name": "neg_y_as_x",
+    "R": [
+      [0.0, -1.0],
+      [1.0, 0.0]
+    ],
+    "t_xy": [0.16015333747643773, -0.3583248966281964],
+    "z_offset": 0.19918708381665734
+  },
+  "table_height_add_m": -0.02426379056371616,
+  "notes_z": "After inverse map, z is table-relative (matching align z_mode=table). Add table_height_m to get Piper world z for IK."
+}

@@ -1,0 +1,211 @@
+{
+    "codebase_version": "v3.0",
+    "robot_type": "piper",
+    "total_episodes": 52,
+    "total_frames": 41296,
+    "total_tasks": 1,
+    "chunks_size": 1000,
+    "data_files_size_in_mb": 100,
+    "video_files_size_in_mb": 200,
+    "fps": 20,
+    "splits": {
+        "train": "0:52"
+    },
+    "data_path": "data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet",
+    "video_path": "videos/{video_key}/chunk-{chunk_index:03d}/file-{file_index:03d}.mp4",
+    "features": {
+        "observation.state": {
+            "dtype": "float32",
+            "shape": [
+                14
+            ],
+            "names": [
+                "left_joint_1.pos",
+                "left_joint_2.pos",
+                "left_joint_3.pos",
+                "left_joint_4.pos",
+                "left_joint_5.pos",
+                "left_joint_6.pos",
+                "left_gripper.pos",
+                "right_joint_1.pos",
+                "right_joint_2.pos",
+                "right_joint_3.pos",
+                "right_joint_4.pos",
+                "right_joint_5.pos",
+                "right_joint_6.pos",
+                "right_gripper.pos"
+            ]
+        },
+        "action": {
+            "dtype": "float32",
+            "shape": [
+                14
+            ],
+            "names": [
+                "left_joint_1.pos",
+                "left_joint_2.pos",
+                "left_joint_3.pos",
+                "left_joint_4.pos",
+                "left_joint_5.pos",
+                "left_joint_6.pos",
+                "left_gripper.pos",
+                "right_joint_1.pos",
+                "right_joint_2.pos",
+                "right_joint_3.pos",
+                "right_joint_4.pos",
+                "right_joint_5.pos",
+                "right_joint_6.pos",
+                "right_gripper.pos"
+            ]
+        },
+        "observation.images.cam_high": {
+            "dtype": "video",
+            "shape": [
+                480,
+                640,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 480,
+                "video.width": 640,
+                "video.codec": "av1",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 20,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.images.cam_left_wrist": {
+            "dtype": "video",
+            "shape": [
+                480,
+                640,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 480,
+                "video.width": 640,
+                "video.codec": "av1",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 20,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.images.cam_right_wrist": {
+            "dtype": "video",
+            "shape": [
+                480,
+                640,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 480,
+                "video.width": 640,
+                "video.codec": "av1",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 20,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "timestamp": {
+            "dtype": "float32",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "frame_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "episode_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "task_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        }
+    },
+    "piper_right_grasp_adjust": {
+        "mode": "constant_offset_align_contact_depth",
+        "source_root": "/home/agilex/code/yjw/SoftFold/data/lerobot/local/softfold_piper_v2",
+        "ref_arm": "left",
+        "target_arm": "right",
+        "ref_stat": "p5",
+        "grip_max_m": null,
+        "max_clearance_mm": 30.0,
+        "min_delta_mm": 0.5,
+        "max_lower_mm": 5.0,
+        "delta_scale": 0.5,
+        "smooth_window": 5,
+        "outcomes_filter": "success",
+        "episode_deltas_mm": {
+            "0": 1.5807050388998627,
+            "1": 5.0,
+            "2": 5.0,
+            "3": 2.8663506658293874,
+            "4": 1.593472624393315,
+            "5": 1.533003478808634,
+            "6": 5.0,
+            "8": 5.0,
+            "10": 1.026822237607784,
+            "12": 2.6638316910490274,
+            "13": 2.693633432222292,
+            "14": 3.0208125352985196,
+            "17": 0.6656074870561587,
+            "18": 0.9536377358012278,
+            "19": 2.7219038996343805,
+            "21": 3.363280924875795,
+            "22": 3.812553754464472,
+            "24": 1.4510036588021937,
+            "25": 1.8953071601748623,
+            "28": 1.002845301696384,
+            "29": 0.8721550795797053,
+            "31": 0.8744612828743117,
+            "38": 1.2406915102823861,
+            "41": 0.7704750504904239,
+            "43": 1.9135446650141854,
+            "49": 1.2624809725277717,
+            "50": 1.1885258497852198
+        },
+        "adjusted_frames": 5434,
+        "notes": "Per-episode constant Z offset on right near-table frames so contact depth (pick+place) matches left; trajectory shape preserved. Negative FK is artifact."
+    }
+}

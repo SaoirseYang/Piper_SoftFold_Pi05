@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "softfold"
+version = "0.1.0"
+description = "SoftFold: Soft-Fold X-VLA → Piper cross-embodiment transfer + record/train/live"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "pyyaml",
+  "pillow",
+  "pyarrow",
+]
+
+[project.optional-dependencies]
+robot = ["piper_sdk", "lerobot", "torch"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["softfold*", "piper_towel_fold*", "lerobot_policy_act_piper*"]

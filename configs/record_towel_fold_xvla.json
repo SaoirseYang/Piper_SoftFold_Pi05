@@ -1,0 +1,103 @@
+{
+  "task": "fold the blue towel",
+  "dataset_format": "lerobot",
+  "repo_id": "local/towel_xvla_v1",
+  "root": "data/lerobot",
+  "robot_type": "piper",
+  "no_videos": false,
+  "prompt_outcome": true,
+  "episode_outcome": "skip",
+  "output_dir": "data/raw",
+  "fps": 20.0,
+  "duration": null,
+  "follower_left_can": "can2",
+  "follower_right_can": "can0",
+  "leader_left_can": "can2",
+  "leader_right_can": "can0",
+  "camera_width": 640,
+  "camera_height": 480,
+  "camera_fps": 30,
+  "image_format": "jpg",
+  "image_quality": 95,
+  "action_source": "leader",
+  "recording_notes": "X-VLA 叠毛巾全流程。原始 LeRobot 数据集可与 pi05/ACT 共用；但 training/policy 必须用本配置（policy.path=xvla）。Piper 14D 用 action_mode=auto。本地 RTX 4060 8GB 只能低显存微调（batch=1 + 冻结 VLM）；完整全参微调建议在 allinai2 等大显存 GPU（官方约 24GB+）。rename_map 把 cam_* 映射到 xvla-base 的 image/image2/image3。",
+  "training": {
+    "policy_type": "xvla",
+    "job_name": "xvla_towel_xvla_v1",
+    "output_dir": "outputs/train/xvla_towel_xvla_v1",
+    "policy_path": "lerobot/xvla-base",
+    "dtype": "bfloat16",
+    "action_mode": "auto",
+    "max_action_dim": 20,
+    "chunk_size": 16,
+    "n_action_steps": 16,
+    "num_denoising_steps": 10,
+    "use_proprio": true,
+    "freeze_vision_encoder": true,
+    "freeze_language_encoder": true,
+    "train_policy_transformer": true,
+    "train_soft_prompts": true,
+    "normalization_mapping": {
+      "ACTION": "IDENTITY",
+      "STATE": "IDENTITY",
+      "VISUAL": "IDENTITY"
+    },
+    "rename_map": {
+      "observation.images.cam_right": "observation.images.image",
+      "observation.images.cam_top": "observation.images.image2",
+      "observation.images.cam_left": "observation.images.image3"
+    },
+    "device": "cuda",
+    "steps": 20000,
+    "batch_size": 1,
+    "num_workers": 2,
+    "log_freq": 50,
+    "save_freq": 5000,
+    "wandb_enable": false,
+    "video_backend": "pyav",
+    "outcome_filter": "exclude-failures",
+    "include_unknown": false,
+    "exclude_unlabeled": true,
+    "push_to_hub": false,
+    "pytorch_alloc_conf": "expandable_segments:True,max_split_size_mb:128"
+  },
+  "policy_live": {
+    "policy_path": "outputs/train/xvla_towel_xvla_v1/checkpoints/last/pretrained_model",
+    "repo_id": "local/towel_xvla_v1",
+    "dataset_root": "data/lerobot/local/towel_xvla_v1",
+    "video_backend": "pyav",
+    "device": "cuda",
+    "inference_dtype": "bfloat16",
+    "num_inference_steps": 10,
+    "execute": true,
+    "duration": 180.0,
+    "fps": 20.0,
+    "control_speed": 40,
+    "max_joint_step_rad": 0.000,
+    "max_gripper_step_m": 0.000,
+    "gripper_effort": 1000,
+    "smoothing_alpha": 0.10,
+    "pace_by_reach": false,
+    "advance_threshold_rad": 0.08,
+    "max_hold_steps": 30,
+    "print_every": 1,
+    "log_jsonl": ""
+  },
+  "cameras": [
+    {
+      "name": "cam_right",
+      "ref": 16
+    },
+    {
+      "name": "cam_top",
+      "ref": 18
+    },
+    {
+      "name": "cam_left",
+      "ref": 20
+    }
+  ],
+  "preprocessing": {
+    "enabled": false
+  }
+}

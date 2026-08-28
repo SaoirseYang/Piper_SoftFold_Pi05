@@ -1,0 +1,54 @@
+# SoftFold：同一 last checkpoint，有无 RTC 对比部署
+#
+# 用法：
+#   bash scripts/pi05_pipeline.sh deploy --yaml configs/deploy_async_pi05_rtc_ab.yaml
+#   bash scripts/pi05_pipeline.sh select    # 选 0=无RTC，1=有RTC
+#
+# 差异要点（继承各自 base_config）：
+#   - no RTC: softfold_piper_pi05_rgrasp_mapping.json
+#       policy_server 无 rtc；client aggregate=weighted_average
+#   - RTC:    softfold_piper_pi05_rtc.json
+#       policy_server.rtc.enabled=true；client aggregate=latest_only
+# 两边共用同一训练产物 last。
+
+base_config: configs/softfold_piper_pi05_rtc.json
+base_port: 8080
+max_instances: 4
+cuda_visible_devices: "0,1"
+
+# 显式 instances（覆盖上方 grid；有 instances 时 grid 不生效）
+instances:
+  - name: last_weighted_average
+    checkpoint: last
+    base_config: configs/softfold_piper_pi05_rgrasp_mapping.json
+    num_inference_steps: 10
+    chunk_size_threshold: 0.40
+    smoothing_alpha: 0.20
+    # 显式关掉，避免误从别处继承 rtc
+    rtc_enabled: false
+    aggregate_fn_name: weighted_average
+
+  - name: last_nothing
+    checkpoint: last
+    base_config: configs/softfold_piper_pi05_rtc.json
+    num_inference_steps: 10
+    chunk_size_threshold: 0.40
+    smoothing_alpha: 0.20
+    rtc_enabled: false
+    aggregate_fn_name: latest_only
+
+  - name: last_rtc
+    checkpoint: last
+    base_config: configs/softfold_piper_pi05_rtc.json
+    num_inference_steps: 10
+    chunk_size_threshold: 0.40
+    smoothing_alpha: 0.20
+    rtc_enabled: true
+    aggregate_fn_name: latest_only
+    # 可按需改 RTC 超参（不写则用 base_config 里的 rtc 块）
+    # rtc:
+    #   enabled: true
+    #   execution_horizon: 10
+    #   max_guidance_weight: 10.0
+    #   prefix_attention_schedule: EXP
+    #   inference_delay_steps: 4

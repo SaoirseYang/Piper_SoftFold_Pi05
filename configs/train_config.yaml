@@ -1,0 +1,32 @@
+# Shared training defaults (see also train_stage1.yaml / train_stage2.yaml)
+
+project: lab_to_lab_softfold_piper
+task: "fold the cloth"
+
+pretrained: lerobot/xvla-soft-fold
+
+mix:
+  virtual_ratio: 0.7
+  local_ratio: 0.3
+  virtual_loss_weight: 1.0
+  local_loss_weight: 1.5
+
+augmentation:
+  enable_train: true
+  brightness: 0.15
+  contrast: 0.15
+
+baselines:
+  - B0_zeroshot_online_ik
+  - B1_full_finetune_mixed
+  - B2_local_only_peft
+  - B3_full_proposal
+
+success_metrics:
+  - grasp_success
+  - flatten_success
+  - fold_success
+  - final_fold_success
+  - action_mse
+  - source_forget_rate
+  - ik_conversion_success_ratio
